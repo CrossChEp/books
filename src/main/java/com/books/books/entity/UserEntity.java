@@ -22,6 +22,10 @@ public class UserEntity {
         return roles;
     }
 
+    public long getId() {
+        return id;
+    }
+
     public void setRoles(Collection<RoleEntity> roles) {
         this.roles = roles;
     }
