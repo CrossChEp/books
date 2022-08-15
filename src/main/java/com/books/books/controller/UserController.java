@@ -33,6 +33,11 @@ public class UserController {
         }
     }
 
+    @GetMapping("/current")
+    public ResponseEntity test() {
+        return ResponseEntity.ok(userService.getCurrentUser());
+    }
+
     @DeleteMapping("/{userId}")
     public ResponseEntity deleteUser(@PathVariable long userId) {
         try {

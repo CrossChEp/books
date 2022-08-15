@@ -9,6 +9,7 @@ import com.books.books.repository.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -70,6 +71,11 @@ public class UserService implements UserDetailsService {
     public UserGetModel getUserById(long userId) {
         UserEntity user = userRepo.findById(userId).orElseThrow();
         return UserGetModel.toModel(user);
+    }
+
+    public UserEntity getCurrentUser() {
+        String userPrincipal = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return userRepo.findAllByUsername(userPrincipal);
     }
 
     public void deleteUser(long userId) {
