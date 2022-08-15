@@ -38,21 +38,21 @@ public class UserController {
         return ResponseEntity.ok(userService.getCurrentUser());
     }
 
-    @DeleteMapping("/{userId}")
-    public ResponseEntity deleteUser(@PathVariable long userId) {
+    @DeleteMapping
+    public ResponseEntity deleteUser() {
         try {
-            userService.deleteUser(userId);
-            return ResponseEntity.ok("User with id " + userId + " was deleted");
+            userService.deleteUser();
+            return ResponseEntity.ok("User was deleted");
         } catch (Exception e) {
             throw e;
         }
     }
 
-    @PutMapping("/{userId}")
-    public ResponseEntity updateUser(@PathVariable long userId, @RequestBody UserUpdateModel updateData) {
+    @PutMapping
+    public ResponseEntity updateUser(@RequestBody UserUpdateModel updateData) {
         try {
-            userService.updateUser(userId, updateData);
-            return ResponseEntity.ok("user with id " + userId + " was updated");
+            userService.updateUser(updateData);
+            return ResponseEntity.ok("user data was updated");
         } catch (Exception e) {
             throw e;
         }

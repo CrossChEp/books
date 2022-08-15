@@ -78,14 +78,19 @@ public class UserService implements UserDetailsService {
         return userRepo.findAllByUsername(userPrincipal);
     }
 
-    public void deleteUser(long userId) {
-        userRepo.deleteById(userId);
+    public void deleteUser() {
+        UserEntity currentUser = getCurrentUser();
+        userRepo.delete(currentUser);
     }
 
-    public void updateUser(long userId, UserUpdateModel userUpdateModel) {
+    public void updateUser(UserUpdateModel userUpdateModel) {
+        if(userUpdateModel.getPassword() != null) {
+            userUpdateModel.setPassword(passwordEncoder.encode(userUpdateModel.getPassword()));
+        }
+        UserEntity user = getCurrentUser();
         ModelMapper modelMapper = new ModelMapper();
         modelMapper.getConfiguration().setSkipNullEnabled(true);
-        UserEntity user = userRepo.findById(userId).orElseThrow();
         modelMapper.map(userUpdateModel, user);
+        userRepo.save(user);
     }
 }
