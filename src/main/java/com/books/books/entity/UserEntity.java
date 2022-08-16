@@ -22,7 +22,7 @@ public class UserEntity {
             joinColumns = @JoinColumn(name = "user_entity_id"),
             inverseJoinColumns = @JoinColumn(name = "book_entity_id")
     )
-    private List<BookEntity> likedBooks = new ArrayList<>();
+    private List<BookEntity> addedBooks = new ArrayList<>();
 
     public UserEntity() {
     }
@@ -55,11 +55,11 @@ public class UserEntity {
         this.password = password;
     }
 
-    public List<BookEntity> getLikedBooks() {
-        return likedBooks;
+    public List<BookEntity> getAddedBooks() {
+        return addedBooks;
     }
 
-    public void setLikedBooks(List<BookEntity> likedBooks) {
-        this.likedBooks = likedBooks;
+    public void setAddedBooks(List<BookEntity> likedBooks) {
+        this.addedBooks = likedBooks;
     }
 }

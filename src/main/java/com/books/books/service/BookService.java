@@ -4,6 +4,7 @@ import com.books.books.entity.BookEntity;
 import com.books.books.entity.UserEntity;
 import com.books.books.exception.bookExceptions.BookAlreadyExistsException;
 import com.books.books.model.bookModels.BookAddModel;
+import com.books.books.model.bookModels.BookGetModel;
 import com.books.books.repository.BookRepository;
 import com.books.books.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,9 +42,14 @@ public class BookService {
     }
 
     private void addBookToUserLiked(BookEntity book, UserEntity user) {
-        List<BookEntity> userBooks = user.getLikedBooks();
+        List<BookEntity> userBooks = user.getAddedBooks();
         userBooks.add(book);
-        user.setLikedBooks(userBooks);
+        user.setAddedBooks(userBooks);
         userRepo.save(user);
+    }
+
+    public BookGetModel getBookByIsbn(long isbn) {
+        BookEntity book = bookRepo.findByIsbn(isbn);
+        return BookGetModel.toModel(book);
     }
 }

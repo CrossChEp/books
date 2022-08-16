@@ -12,7 +12,7 @@ public class BookEntity {
     private String name;
     private long isbn;
     private String authorName;
-    @ManyToMany(mappedBy = "likedBooks")
+    @ManyToMany(mappedBy = "addedBooks")
     private List<UserEntity> addedUsers = new ArrayList<>();
 
     public BookEntity() {
