@@ -35,14 +35,24 @@ public class BookController {
         return ResponseEntity.ok(bookService.getAllBooks());
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Object> updateBook(@PathVariable long id,
+    @PutMapping("/{bookId}")
+    public ResponseEntity<Object> updateBook(@PathVariable long bookId,
                                              @RequestBody BookUpdateModel newBookData) {
         try {
-            bookService.updateBook(id, newBookData);
+            bookService.updateBook(bookId, newBookData);
             return ResponseEntity.ok("book was updated");
         } catch (UserHaveNoPermission exception) {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, exception.getMessage());
+        }
+    }
+
+    @DeleteMapping("/{bookId}")
+    public ResponseEntity<Object> deleteBook(@PathVariable long bookId) {
+        try {
+            bookService.deleteBook(bookId);
+            return ResponseEntity.ok("book was deleted");
+        } catch (UserHaveNoPermission e) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, e.getMessage());
         }
     }
 }

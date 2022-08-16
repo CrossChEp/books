@@ -83,4 +83,13 @@ public class BookService {
         mapper.map(newBookData, book);
         bookRepo.save(book);
     }
+
+    public void deleteBook(long bookId) throws UserHaveNoPermission {
+        BookEntity book = bookRepo.findById(bookId).orElseThrow();
+        UserEntity user = userService.getCurrentUser();
+        if(!user.getAddedBooks().contains(book)) {
+            throw new UserHaveNoPermission("User have no such book");
+        }
+        bookRepo.delete(book);
+    }
 }
