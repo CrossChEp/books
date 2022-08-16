@@ -3,13 +3,19 @@ package com.books.books.service;
 import com.books.books.entity.BookEntity;
 import com.books.books.entity.UserEntity;
 import com.books.books.exception.bookExceptions.BookAlreadyExistsException;
+import com.books.books.exception.userExceptions.UserHaveNoPermission;
 import com.books.books.model.bookModels.BookAddModel;
 import com.books.books.model.bookModels.BookGetModel;
+import com.books.books.model.bookModels.BookUpdateModel;
 import com.books.books.repository.BookRepository;
 import com.books.books.repository.UserRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -51,5 +57,30 @@ public class BookService {
     public BookGetModel getBookByIsbn(long isbn) {
         BookEntity book = bookRepo.findByIsbn(isbn);
         return BookGetModel.toModel(book);
+    }
+
+    public List<BookGetModel> getAllBooks() {
+        List<BookEntity> books = bookRepo.findAll();
+        return generateBooksModelList(books);
+    }
+
+    private List<BookGetModel> generateBooksModelList(List<BookEntity> books) {
+        List<BookGetModel> booksModels = new ArrayList<>();
+        for(var book: books) {
+            booksModels.add(BookGetModel.toModel(book));
+        }
+        return booksModels;
+    }
+
+    public void updateBook(long id, BookUpdateModel newBookData) throws UserHaveNoPermission {
+        BookEntity book = bookRepo.findById(id).orElseThrow();
+        UserEntity currentUser = userService.getCurrentUser();
+        if(!currentUser.getAddedBooks().contains(book)) {
+            throw new UserHaveNoPermission("User have no such book");
+        }
+        ModelMapper mapper = new ModelMapper();
+        mapper.getConfiguration().setSkipNullEnabled(true);
+        mapper.map(newBookData, book);
+        bookRepo.save(book);
     }
 }

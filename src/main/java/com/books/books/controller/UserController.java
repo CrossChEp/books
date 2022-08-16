@@ -25,18 +25,15 @@ public class UserController {
         return ResponseEntity.ok(userService.getUserById(userId));
     }
 
-    @GetMapping("/current")
-    public ResponseEntity<Object> test() {
-        return ResponseEntity.ok(userService.getCurrentUser());
-    }
-
     @DeleteMapping
     public ResponseEntity<Object> deleteUser() {
+        userService.deleteUser();
         return ResponseEntity.ok("User was deleted");
     }
 
     @PutMapping
     public ResponseEntity<Object> updateUser(@RequestBody UserUpdateModel updateData) {
+        userService.updateUser(updateData);
         return ResponseEntity.ok("user data was updated");
     }
 }

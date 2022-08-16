@@ -2,22 +2,22 @@ package com.books.books.model.bookModels;
 
 import com.books.books.entity.BookEntity;
 
-public class BookAddModel {
-    private String name;
-    private long isbn;
-    private String authorName;
+public class BookUpdateModel {
+	private String name;
+	private long isbn;
+	private String authorName;
 
-    public static BookAddModel toModel(BookEntity book) {
-        BookAddModel model = new BookAddModel();
+    public BookUpdateModel toModel(BookEntity book) {
+        BookUpdateModel model = new BookUpdateModel();
         model.setName(book.getName());
         model.setIsbn(book.getIsbn());
         model.setAuthorName(book.getAuthorName());
         return model;
     }
 
-    public BookAddModel() {
-
-    }
+	public BookUpdateModel() {
+		
+	}
 
     public String getName() {
         return name;
