@@ -1,4 +1,4 @@
-package com.books.books.model;
+package com.books.books.model.userModels;
 
 import com.books.books.entity.UserEntity;
 

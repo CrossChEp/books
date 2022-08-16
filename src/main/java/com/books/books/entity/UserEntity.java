@@ -3,6 +3,7 @@ package com.books.books.entity;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 @Entity
 public class UserEntity {
@@ -14,6 +15,14 @@ public class UserEntity {
 
     @ManyToMany(fetch = FetchType.EAGER)
     private Collection<RoleEntity> roles = new ArrayList<>();
+
+    @ManyToMany
+    @JoinTable(
+            name = "user_books",
+            joinColumns = @JoinColumn(name = "user_entity_id"),
+            inverseJoinColumns = @JoinColumn(name = "book_entity_id")
+    )
+    private List<BookEntity> likedBooks = new ArrayList<>();
 
     public UserEntity() {
     }
@@ -44,5 +53,13 @@ public class UserEntity {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public List<BookEntity> getLikedBooks() {
+        return likedBooks;
+    }
+
+    public void setLikedBooks(List<BookEntity> likedBooks) {
+        this.likedBooks = likedBooks;
     }
 }

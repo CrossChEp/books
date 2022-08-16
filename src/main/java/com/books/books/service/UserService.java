@@ -1,10 +1,10 @@
 package com.books.books.service;
 
 import com.books.books.entity.UserEntity;
-import com.books.books.exception.UserAlreadyExistsException;
-import com.books.books.model.UserGetModel;
-import com.books.books.model.UserRegisterModel;
-import com.books.books.model.UserUpdateModel;
+import com.books.books.exception.userExceptions.UserAlreadyExistsException;
+import com.books.books.model.userModels.UserGetModel;
+import com.books.books.model.userModels.UserRegisterModel;
+import com.books.books.model.userModels.UserUpdateModel;
 import com.books.books.repository.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +18,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 @Service

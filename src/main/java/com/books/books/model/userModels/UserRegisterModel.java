@@ -1,7 +1,6 @@
-package com.books.books.model;
+package com.books.books.model.userModels;
 
 import com.books.books.entity.UserEntity;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class UserRegisterModel {
     private String username;
